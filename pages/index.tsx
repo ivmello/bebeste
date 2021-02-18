@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Image from 'next/image'
+import { FaHeart } from "react-icons/fa";
 
 export default function Home() {
   const participantes = [
@@ -32,6 +33,11 @@ export default function Home() {
       looser: 0,
     },
   ];
+
+  function openConfirmation() {
+    // console.log('aqui');
+    alert('Calma, ainda não ta pronto');
+  }
 
   return (
     <div>
@@ -77,13 +83,9 @@ export default function Home() {
                       {item.frequencia.map((frequencia) => 
                         <div className={`item-frequencia ${frequencia ? 'vermelho' : 'verde'}`}></div>
                       )}
-                      
-                      {/* <div className="item-frequencia vermelho"></div>
-                      <div className="item-frequencia verde"></div>
-                      <div className="item-frequencia verde"></div> */}
                       <div className="item-frequencia "></div>
                     </div>
-                    <button type="button" className="btn-beber">Xi, <b>Bebi hoje</b></button>
+                    <button type="button" onClick={openConfirmation} className="btn-beber">Xi, <b>Bebi hoje</b></button>
                   </div>
                 </div>
               </div>
@@ -91,6 +93,11 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      <footer>
+        Um projeto de código aberto para ajudar amigos a beberem menos durante a semana. <br/>
+        <a href="https://github.com/ivmello/bebeste" target="_blank">Contribua aqui <FaHeart/></a>
+      </footer>
     </div>
   )
 }
