@@ -63,7 +63,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     res.status(200).json({
       status: 2,
-      msg: 'Você já atualizou o sistema hoje'
+      msg: 'Você já atualizou o sistema hoje',
+      price_of_day: price,
     })
   } else {
     const created = await query({
@@ -76,6 +77,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     res.status(201).json({
       status: 1,
       msg: 'Obrigado por participar',
+      price_of_day: price,
     });
   }
 

@@ -1,4 +1,4 @@
-import { GetStaticProps } from 'next'
+import { GetStaticProps, GetServerSideProps } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import { useState } from 'react';
@@ -13,20 +13,23 @@ import ModalDrink from '../components/ModalDrink'
 //   price_of_day: number,
 // }
 
-const baseUrl = 'https://bebeste.vercel.app';
+// const baseUrl = 'https://bebeste.vercel.app';
+const baseUrl = 'http://localhost:3000';
 
-// export default function Home({ users }) {
-export default function Home() {
+export default function Home({ users }) {
+// export default function Home() {
   let [preloader, setPreloader] = useState(false);
+  let [priceOfDay, setPriceOfDay] = useState(0);
   let [modalOpened, setModalOpened] = useState(true);
 
-  const users = [
-    {
-      name: 'Igor',
-      total: 1200,
-      price_of_day: 1200,
-    },
-  ];
+  // const users = [
+  //   {
+  //     id: 1,
+  //     name: 'Igor',
+  //     total: 1200,
+  //     price_of_day: 1200,
+  //   },
+  // ];
 
   async function openConfirmation(user_id, drank) {
     let msg = `Muito bem, você conseguiu um grande feito. Continue assim que você irá longe.`
@@ -48,6 +51,7 @@ export default function Home() {
         .then(data => {
           console.log(data);
           setPreloader(false);
+          setPriceOfDay(data.price_of_day);
           if(data.status == 2) {
             alert('Você já escolheu sua opção hoje, espertinho.')
           } else {
@@ -77,7 +81,7 @@ export default function Home() {
 
         <div className="cotacao">
           <span className="label">Cotação do Beer Coin hoje (<b>bc</b>)</span>
-          <span className="valor_cotacao">###</span>
+          <span className="valor_cotacao">{priceOfDay ? priceOfDay : '###'}</span>
           <div className="linha_cotacao"></div>
         </div>
 
@@ -86,7 +90,7 @@ export default function Home() {
           <div className="lista-participantes">
             {users.map((item, i) =>
               <div key={i} className="item-participante">
-                {!!item.winner &&
+                {/* {!!item.winner &&
                   <div className="winner">
                     <Image src="/trophy.png" width="96" height="96"/>
                   </div>
@@ -95,7 +99,7 @@ export default function Home() {
                   <div className="looser">
                   <Image src="/drunk.png" width="96" height="96"/>
                 </div>
-                }
+                } */}
                 <div className="nome">{ item.name }</div>
                 <div className="linha"></div>
                 <div className="info">
@@ -129,13 +133,23 @@ export default function Home() {
   )
 }
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const res = await fetch(`${baseUrl}/api/users`)
   const users = await res.json()
   return {
     props: {
       users
     },
-    revalidate: 5,
   }
 }
+
+// export const getStaticProps: GetStaticProps = async (context) => {
+//   const res = await fetch(`${baseUrl}/api/users`)
+//   const users = await res.json()
+//   return {
+//     props: {
+//       users
+//     },
+//     revalidate: 5,
+//   }
+// }
