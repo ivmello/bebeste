@@ -15,40 +15,18 @@ import ModalDrink from '../components/ModalDrink'
 
 const baseUrl = 'https://bebeste.vercel.app';
 
-export default function Home({ users }) {
+// export default function Home({ users }) {
+export default function Home() {
   let [preloader, setPreloader] = useState(false);
   let [modalOpened, setModalOpened] = useState(true);
 
-  // const participantes = [
-  //   {
-  //     nome: 'Igor',
-  //     frequencia: [0,1,0,0],
-  //     saldo: 1200,
-  //     winner: 1,
-  //     looser: 0,
-  //   },
-  //   {
-  //     nome: 'Rico',
-  //     frequencia: [1,1,0,0],
-  //     saldo: 900,
-  //     winner: 0,
-  //     looser: 1,
-  //   },
-  //   {
-  //     nome: 'Karenini',
-  //     frequencia: [1,0,0,0],
-  //     saldo: 1000,
-  //     winner: 0,
-  //     looser: 0,
-  //   },
-  //   {
-  //     nome: 'Jess',
-  //     frequencia: [1,0,1,1],
-  //     saldo: 1100,
-  //     winner: 0,
-  //     looser: 0,
-  //   },
-  // ];
+  const users = [
+    {
+      name: 'Igor',
+      total: 1200,
+      price_of_day: 1200,
+    },
+  ];
 
   async function openConfirmation(user_id, drank) {
     let msg = `Muito bem, você conseguiu um grande feito. Continue assim que você irá longe.`
