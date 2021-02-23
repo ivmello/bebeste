@@ -1,17 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { DateTime } from 'luxon';
 import { query } from '../../../libs/db';
-import { type } from 'os';
-
-type Score = {
-  id: number,
-  user_id: number,
-  date: string,
-  drank: number,
-  total: number,
-  price_of_day: number,
-}
-
 
 function getRandomInt(min, max) {
   min = Math.ceil(min);
@@ -61,16 +50,20 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   const score_value_day = drank == 0 ? price : 0;
 
   if (scores.length > 0) {
-    const score = scores[0];
-    const updated = await query({
-      query: `
-        UPDATE scores
-        SET date = ?, drank = ?, total = ?
-        WHERE user_id = ? AND id = ?
-      `,
-      values: [date, drank, score_value_day, user_id, score.id],
-    });
-    res.status(201).json(updated);
+    // const score = scores[0];
+    // const updated = await query({
+    //   query: `
+    //     UPDATE scores
+    //     SET date = ?, drank = ?, total = ?
+    //     WHERE user_id = ? AND id = ?
+    //   `,
+    //   values: [date, drank, score_value_day, user_id, score.id],
+    // });
+    // res.status(201).json(updated);
+
+    res.status(200).json({
+      msg: 'Você já atualizou o sistema hoje'
+    })
   } else {
     const created = await query({
       query: `
