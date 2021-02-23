@@ -7,6 +7,7 @@ import { DateTime } from 'luxon';
 import { config } from '../utils'
 
 const baseUrl = config.API_URL;
+console.log(baseUrl);
 
 export default function Home({ users_data }) {
   let [users, setUsers] = useState(users_data);
