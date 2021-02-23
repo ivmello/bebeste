@@ -1,15 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 type ModalType = {
   isOpened: boolean,
-  className: string,
-  modalRef: string,
+  className?: string,
+  modalRef?: string,
 }
 
 export default function ModalDrink({ isOpened, className, modalRef }: ModalType) {
   let [opened, setOpened] = useState(isOpened);
   // const { className, modalRef } = props;
+
+  useEffect(() => {
+    console.log('modal');
+  }, []);
 
   function closeModal() {
     setOpened(false);

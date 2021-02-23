@@ -168,6 +168,8 @@ body {
     }
 
     .frequencia {
+      display: flex;
+      flex-direction: column;
       .label {
         margin: 0 0 10px;
       }
@@ -182,6 +184,7 @@ body {
       .lista-frequencia {
         display: flex;
         gap: 2px;
+        margin: 0 0 15px;
 
         .item-frequencia {
           width: 10px;
@@ -201,8 +204,8 @@ body {
   }
 }
 
-.btn-beber {
-  background: #EF7824;
+.btn-bebi, .btn-nao-bebi {
+  background: #ff5512;
   color: #fff;
   font-size: 20px;
   text-align: center;
@@ -210,12 +213,19 @@ body {
   width: 100%;
   border-radius: 5px;
   border: none;
-  margin: 20px 0 0;
+  margin: 10px 0 0;
   cursor: pointer;
   transition: 200ms;
 
   &:hover, &:active {
-    background: darken(#EF7824, 15%);
+    background: darken(#ff5512, 15%);
+  }
+}
+
+.btn-nao-bebi {
+  background: #35b668;
+  &:hover, &:active {
+    background: darken(#35b668, 15%);
   }
 }
 
@@ -298,4 +308,14 @@ footer {
     z-index: 1;
     background: rgba(0,0,0,0.8);
   }
+}
+.preloader {
+  background: red;
+  color: #fff;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+  z-index: 999;
 }
