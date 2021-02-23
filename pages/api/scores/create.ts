@@ -62,6 +62,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     // res.status(201).json(updated);
 
     res.status(200).json({
+      status: 2,
       msg: 'Você já atualizou o sistema hoje'
     })
   } else {
@@ -72,7 +73,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       `,
       values: [user_id, formated_date, drank, price, score_value_day],
     });
-    res.status(201).json(created);
+    res.status(201).json({
+      status: 1,
+      msg: 'Obrigado por participar',
+    });
   }
 
   res.status(500).json({
