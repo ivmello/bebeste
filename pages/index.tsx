@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { useState } from 'react';
 import { FaHeart } from "react-icons/fa";
 import { DateTime } from 'luxon';
+import { config } from '../utils'
 import ModalDrink from '../components/ModalDrink'
 
 // type UsersList = {
@@ -13,24 +14,12 @@ import ModalDrink from '../components/ModalDrink'
 //   price_of_day: number,
 // }
 
-const baseUrl = 'https://bebeste.vercel.app';
-// const baseUrl = 'http://localhost:3000';
+const baseUrl = config.API_URL;
 
-export default function Home({ users }) {
-// export default function Home() {
-// export default function Home() {
+export default function Home({ users_data }) {
+  let [users, setUsers] = useState(users_data);
   let [preloader, setPreloader] = useState(false);
   let [priceOfDay, setPriceOfDay] = useState(0);
-  let [modalOpened, setModalOpened] = useState(true);
-
-  // const users = [
-  //   {
-  //     id: 1,
-  //     name: 'Igor',
-  //     total: 1200,
-  //     price_of_day: 1200,
-  //   },
-  // ];
 
   async function openConfirmation(user_id, drank) {
     let msg = `Muito bem, você conseguiu um grande feito. Continue assim que você irá longe.`
@@ -46,19 +35,27 @@ export default function Home({ users }) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({user_id, date, drank })
-    };
-    fetch(`${baseUrl}/api/scores/create`, requestOptions)
-        .then(response => response.json())
-        .then(data => {
-          console.log(data);
-          setPreloader(false);
-          setPriceOfDay(data.price_of_day);
-          if(data.status == 2) {
-            alert('Você já escolheu sua opção hoje, espertinho.')
-          } else {
-            alert(msg);
-          }
-        });
+      };
+      fetch(`${baseUrl}/scores`, requestOptions)
+          .then(response => response.json())
+          .then(data => {
+            setPreloader(false);
+            setPriceOfDay(data.price_of_day);
+
+            if(data.msg) {
+              alert(data.msg)
+            } else {
+              alert(msg);
+
+              setPreloader(true);
+              fetch(`${baseUrl}/users`)
+                .then(response => response.json())
+                .then(data => {
+                  setPreloader(false);
+                  setUsers(data);
+                });
+            }
+          });
     }
   }
 
@@ -109,13 +106,13 @@ export default function Home({ users }) {
                     <span>{ item.total ? item.total : 0 } <small>bc</small></span>
                   </div>
                   <div className="frequencia">
-                    {/* <small>Resumo da semana</small>
+                    <small>Resumo da semana</small>
                     <div className="lista-frequencia">
-                      {item.frequencia.map((frequencia, i) => 
-                        <div key={i} className={`item-frequencia ${frequencia ? 'vermelho' : 'verde'}`}></div>
+                      {item.frequency.map((frequencia, i) => 
+                        <div key={i} className={`item-frequencia ${frequencia.drank ? 'vermelho' : 'verde'}`}></div>
                       )}
-                      <div className="item-frequencia "></div>
-                    </div> */}
+                      <div className="item-frequencia"></div>
+                    </div>
                     <button type="button" onClick={() => openConfirmation(item.id, 0)} className="btn-nao-bebi">Venci, <b>Não bebi hoje</b></button>
                     <button type="button" onClick={() => openConfirmation(item.id, 1)} className="btn-bebi"><b>Tive que beber</b></button>
                   </div>
@@ -135,11 +132,11 @@ export default function Home({ users }) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const res = await fetch(`${baseUrl}/api/users`)
+  const res = await fetch(`${baseUrl}/users`)
   const users = await res.json()
   return {
     props: {
-      users
+      users_data: users
     },
   }
 }
