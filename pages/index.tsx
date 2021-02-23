@@ -50,11 +50,7 @@ export default function Home({ users }) {
   //   },
   // ];
 
-  async function openConfirmation(user_id, drank, price) {
-    // alert('Calma, ainda não ta pronto');
-    // setModalOpened(true)
-    // console.log(modalOpened);
-
+  async function openConfirmation(user_id, drank) {
     let msg = `Muito bem, você conseguiu um grande feito. Continue assim que você irá longe.`
 
     if (drank) {
