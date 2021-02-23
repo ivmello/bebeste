@@ -5,14 +5,6 @@ import { useState } from 'react';
 import { FaHeart } from "react-icons/fa";
 import { DateTime } from 'luxon';
 import { config } from '../utils'
-import ModalDrink from '../components/ModalDrink'
-
-// type UsersList = {
-//   id: number,
-//   name: string,
-//   total: number,
-//   price_of_day: number,
-// }
 
 const baseUrl = config.API_URL;
 
