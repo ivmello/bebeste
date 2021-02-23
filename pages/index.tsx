@@ -1,8 +1,11 @@
 import Head from 'next/head'
 import Image from 'next/image'
+import { useState } from 'react';
 import { FaHeart } from "react-icons/fa";
+import ModalDrink from '../components/ModalDrink'
 
 export default function Home() {
+  let [modalOpened, setModalOpened] = useState(true);
   const participantes = [
     {
       nome: 'Igor',
@@ -35,8 +38,9 @@ export default function Home() {
   ];
 
   function openConfirmation() {
-    // console.log('aqui');
-    alert('Calma, ainda não ta pronto');
+    // alert('Calma, ainda não ta pronto');
+    setModalOpened(true)
+    console.log(modalOpened);
   }
 
   return (
@@ -45,6 +49,8 @@ export default function Home() {
         <title>Bebeste?</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
+      <ModalDrink isOpened={modalOpened} />
 
       <div className="app">
         <div className="logo"><Image src="/logo.jpg" width="300" height="224" /></div>
@@ -59,7 +65,7 @@ export default function Home() {
           <span className="label">Participantes</span>
           <div className="lista-participantes">
             {participantes.map((item, i) => 
-              <div className="item-participante">
+              <div key={i} className="item-participante">
                 {!!item.winner &&
                   <div className="winner">
                     <Image src="/trophy.png" width="96" height="96"/>
@@ -80,8 +86,8 @@ export default function Home() {
                   <div className="frequencia">
                     <small>Resumo da semana</small>
                     <div className="lista-frequencia">
-                      {item.frequencia.map((frequencia) => 
-                        <div className={`item-frequencia ${frequencia ? 'vermelho' : 'verde'}`}></div>
+                      {item.frequencia.map((frequencia, i) => 
+                        <div key={i} className={`item-frequencia ${frequencia ? 'vermelho' : 'verde'}`}></div>
                       )}
                       <div className="item-frequencia "></div>
                     </div>
