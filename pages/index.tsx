@@ -13,7 +13,7 @@ import ModalDrink from '../components/ModalDrink'
 //   price_of_day: number,
 // }
 
-const baseUrl = 'http://localhost:3000';
+const baseUrl = 'https://bebeste.vercel.app';
 
 export default function Home({ users }) {
   let [preloader, setPreloader] = useState(false);
