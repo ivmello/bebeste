@@ -63,16 +63,16 @@ export function ParticipanteItem({ item, i }) {
   return (
     <animated.div style={props}>
       <div className={styles.participante}>
-        {!!item.winner &&
+        {item.day_of_week == 5 && item.winner ? (
           <div className={styles.winner}>
             <Image src="/trophy.png" width="96" height="96"/>
           </div>
-        }
-        {!!item.loser &&
+        ) : null}
+        {item.day_of_week == 5 && item.loser ? (
           <div className={styles.loser}>
           <Image src="/drunk.png" width="96" height="96"/>
         </div>
-        }
+        ) : null}
         <div className={styles.nome}>{ item.name }</div>
         <div className={styles.linha}></div>
         <div className={styles.info}>
@@ -88,8 +88,27 @@ export function ParticipanteItem({ item, i }) {
               )}
               <div className={styles.itemFrequencia}></div>
             </div>
-            <button type="button" onClick={() => openConfirmation(item.id, 0)} className={styles.btnNaoBebi}>Venci, <b>Não bebi hoje</b></button>
-            <button type="button" onClick={() => openConfirmation(item.id, 1)} className={styles.btnBebi}><b>Tive que beber</b></button>
+
+            {item.day_of_week == 5 ? (
+              <p className={styles.txtEncerrado}>
+                {item.winner && !item.loser ? (
+                  <>Parabéns! você conseguiu, {item.name}!!</>
+                ) : null}
+                {!item.winner && item.loser ? (
+                  <>Já você não podemos falar o mesmo né...</>
+                ) : null}
+                {!item.winner && !item.loser ? (
+                  <>Não deu dessa vez. Mas pelo menos você não vai pagar cerveja.</>
+                ) : null}
+              </p>
+            ) : (
+              <>
+                <button type="button" onClick={() => openConfirmation(item.id, 0)} className={styles.btnNaoBebi}>Venci, <b>Não bebi hoje</b></button>
+                <button type="button" onClick={() => openConfirmation(item.id, 1)} className={styles.btnBebi}><b>Tive que beber</b></button>
+              </>
+            )}
+            
+            {/* <button type="button" onClick={() => openConfirmation(item.id, 1)} className={styles.btnBebi}><b>Tive que beber</b></button> */}
           </div>
         </div>
       </div>
