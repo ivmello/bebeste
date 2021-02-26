@@ -1,0 +1,38 @@
+.participantes {
+  width: 100%;
+  max-width: 1500px;
+  margin: 40px auto;
+
+  .label {
+    display: block;
+    text-align: center;
+    margin: 0 0 40px;
+  }
+
+  .listaParticipantes {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    flex-wrap: wrap;
+    margin: 10px 0;
+    gap: 15px;
+
+    @media(max-width: 998px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media(max-width: 500px) {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+.loadingUsers {
+  margin: 40px 0;
+  font-size: 30px;
+  font-weight: 300;
+  color: #999;
+
+  strong {
+    font-weight: 700;
+  }
+}

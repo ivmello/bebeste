@@ -1,0 +1,20 @@
+.cotacao {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 0;
+
+  .valor_cotacao {
+    font-size: 30px;
+    color: #E5D4D4;
+    font-weight: 700;
+  }
+
+  .linha_cotacao {
+    width: 100px;
+    height: 5px;
+    background: #643D42;
+    border-radius: 30px;
+  }
+}

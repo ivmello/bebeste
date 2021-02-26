@@ -1,56 +1,15 @@
-import { GetStaticProps, GetServerSideProps } from 'next'
+import { GetServerSideProps } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { FaHeart } from "react-icons/fa";
-import { DateTime } from 'luxon';
 import { config } from '../utils'
+import { Cotacao } from '../components/Cotacao';
+import { Participantes } from '../components/Participantes';
+import { PriceContext } from '../contexts/PriceContext';
 
-const baseUrl = config.API_URL;
-console.log(baseUrl);
-
-export default function Home({ users_data }) {
-  let [users, setUsers] = useState(users_data);
-  let [preloader, setPreloader] = useState(false);
-  let [priceOfDay, setPriceOfDay] = useState(0);
-
-  async function openConfirmation(user_id, drank) {
-    let msg = `Muito bem, você conseguiu um grande feito. Continue assim que você irá longe.`
-
-    if (drank) {
-      msg = `Poxa, que pena que você bebeu. Ninguém aqui está te julgando mas seria bom pensar melhor na próxima vez.`
-    }
-
-    if (confirm(`Tem certeza que deseja escolher essa opção? Você não poderá mudar depois`)) {
-      setPreloader(true);
-      const date = DateTime.local().setZone("America/Campo_Grande").toISODate().toString();
-      const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({user_id, date, drank })
-      };
-      fetch(`${baseUrl}/scores`, requestOptions)
-          .then(response => response.json())
-          .then(data => {
-            setPreloader(false);
-            setPriceOfDay(data.price_of_day);
-
-            if(data.msg) {
-              alert(data.msg)
-            } else {
-              alert(msg);
-
-              setPreloader(true);
-              fetch(`${baseUrl}/users`)
-                .then(response => response.json())
-                .then(data => {
-                  setPreloader(false);
-                  setUsers(data);
-                });
-            }
-          });
-    }
-  }
+export default function Home() {
+  const { isLoading} = useContext(PriceContext);
 
   return (
     <div>
@@ -59,61 +18,17 @@ export default function Home({ users_data }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      {preloader && (
+      {isLoading && (
         <div className="preloader">
-          Enviando...
+          carregando ...
         </div>
       )}
-
-      {/* <ModalDrink isOpened={modalOpened} /> */}
 
       <div className="app">
         <div className="logo"><Image src="/logo.jpg" width="300" height="224" /></div>
 
-        <div className="cotacao">
-          <span className="label">Cotação do Beer Coin hoje (<b>bc</b>)</span>
-          <span className="valor_cotacao">{priceOfDay ? priceOfDay : '###'}</span>
-          <div className="linha_cotacao"></div>
-        </div>
-
-        <div className="participantes">
-          <span className="label">Participantes</span>
-          <div className="lista-participantes">
-            {users.map((item, i) =>
-              <div key={i} className="item-participante">
-                {/* {!!item.winner &&
-                  <div className="winner">
-                    <Image src="/trophy.png" width="96" height="96"/>
-                  </div>
-                }
-                {!!item.looser &&
-                  <div className="looser">
-                  <Image src="/drunk.png" width="96" height="96"/>
-                </div>
-                } */}
-                <div className="nome">{ item.name }</div>
-                <div className="linha"></div>
-                <div className="info">
-                  <div className="saldo">
-                    <small>Saldo</small>
-                    <span>{ item.total ? item.total : 0 } <small>bc</small></span>
-                  </div>
-                  <div className="frequencia">
-                    <small>Resumo da semana</small>
-                    <div className="lista-frequencia">
-                      {item.frequency.map((frequencia, i) => 
-                        <div key={i} className={`item-frequencia ${frequencia.drank ? 'vermelho' : 'verde'}`}></div>
-                      )}
-                      <div className="item-frequencia"></div>
-                    </div>
-                    <button type="button" onClick={() => openConfirmation(item.id, 0)} className="btn-nao-bebi">Venci, <b>Não bebi hoje</b></button>
-                    <button type="button" onClick={() => openConfirmation(item.id, 1)} className="btn-bebi"><b>Tive que beber</b></button>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
+        <Cotacao />
+        <Participantes />
       </div>
 
       <footer>
@@ -124,23 +39,12 @@ export default function Home({ users_data }) {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const res = await fetch(`${baseUrl}/users`)
-  const users = await res.json()
-  return {
-    props: {
-      users_data: users
-    },
-  }
-}
-
-// export const getStaticProps: GetStaticProps = async (context) => {
-//   const res = await fetch(`${baseUrl}/api/users`)
+// export const getServerSideProps: GetServerSideProps = async (context) => {
+//   const res = await fetch(`${baseUrl}/users`)
 //   const users = await res.json()
 //   return {
 //     props: {
-//       users
+//       users_data: users
 //     },
-//     revalidate: 5,
 //   }
 // }
