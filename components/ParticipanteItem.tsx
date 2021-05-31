@@ -78,7 +78,11 @@ export function ParticipanteItem({ item, i }) {
         <div className={styles.info}>
           <div className={styles.saldo}>
             <small>Saldo</small>
+            {item.day_of_week == 5 && item.winner ? (
             <span>{ item.total ? item.total : 0 } <small>bc</small></span>
+          ) : (
+            <span>---</span>
+          )}
           </div>
           <div className={styles.frequencia}>
             <small>Resumo da semana</small>
@@ -107,7 +111,6 @@ export function ParticipanteItem({ item, i }) {
                 <button type="button" onClick={() => openConfirmation(item.id, 1)} className={styles.btnBebi}><b>Tive que beber</b></button>
               </>
             )}
-            
             {/* <button type="button" onClick={() => openConfirmation(item.id, 1)} className={styles.btnBebi}><b>Tive que beber</b></button> */}
           </div>
         </div>

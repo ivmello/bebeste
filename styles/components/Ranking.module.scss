@@ -1,0 +1,82 @@
+.ranking {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 0;
+
+}
+
+
+.table_ranking {
+  margin: 20px 0;
+  padding: 0;
+  border-spacing: 0;
+  border-collapse: separate;
+
+  th {
+    padding: 5px;
+    border-right: 1px solid #d3cdcd;
+    border-bottom: 1px solid #d3cdcd;
+
+    &:last-child {
+      border-right: none;
+    }
+  }
+
+  td {
+    text-align: right;
+    padding: 5px 20px;
+    border-bottom: 1px solid #d3cdcd;
+    border-right: 1px solid #d3cdcd;
+
+    &:last-child {
+      border-right: none;
+      // border-bottom: none;
+    }
+
+    table {
+      border-spacing: 0;
+      border-collapse: separate;
+
+      th {
+        small {
+          font-size: 12px;
+          font-weight: 300;
+        }
+      }
+      td, th {
+        // border: none;
+        border-right: 1px solid #5D393D;
+        padding: 5px 5px 0;
+        text-align: center;
+      }
+
+      td {
+        text-align: center;
+        div {
+          display: inline-block;
+        }
+      }
+    }
+
+    .middle {
+      width: 20px;
+      height: 20px;
+      background: #d6d6d6;
+      border-radius: 10px;
+    }
+    .loser {
+      width: 20px;
+      height: 20px;
+      background: #b61e1e;
+      border-radius: 10px;
+    }
+    .winner {
+      width: 20px;
+      height: 20px;
+      background: #35b668;
+      border-radius: 10px;
+    }
+  }
+}

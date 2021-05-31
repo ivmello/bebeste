@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from 'react';
 import { FaHeart } from "react-icons/fa";
 import { config } from '../utils'
 import { Cotacao } from '../components/Cotacao';
+import { Ranking } from '../components/Ranking';
 import { Participantes } from '../components/Participantes';
 import { PriceContext } from '../contexts/PriceContext';
 
@@ -27,8 +28,10 @@ export default function Home() {
       <div className="app">
         <div className="logo"><Image src="/logo.jpg" width="300" height="224" /></div>
 
-        <Cotacao />
+        {/* <Cotacao /> */}
+        <small>(o saldo dos participantes será mostrado somente na sexta-feira)</small>
         <Participantes />
+        {/* <Ranking /> */}
       </div>
 
       <footer>
