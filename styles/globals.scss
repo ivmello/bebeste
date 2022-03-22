@@ -2,7 +2,8 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: 'Poppins', sans-serif !important;
+  font-family: "Poppins", sans-serif !important;
+  background: red;
 }
 
 a {
@@ -17,7 +18,7 @@ a {
 }
 
 body {
-  color: #5D393D;
+  color: #5d393d;
 }
 
 .container {
@@ -81,7 +82,7 @@ body {
 footer {
   background: #e9e9e9;
   text-align: center;
-  padding: 40px 20px; 
+  padding: 40px 20px;
   font-size: 12px;
   margin: 50px 0 0;
   line-height: 23px;
